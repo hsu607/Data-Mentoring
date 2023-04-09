@@ -1,5 +1,5 @@
 # 🐢Turtle_R
-Welcome to Turtle_R GitHub repository!👋 This is a space where five friends from Ewha Womans University's Department of Statistics share our projects and competition experiences.
+Welcome to Turtle_R GitHub repository! This is a space where five friends from Ewha Womans University's Department of Statistics share our projects and competition experiences.
 
 ## 🏆 Competitions
 ### - Data Crator Camp
