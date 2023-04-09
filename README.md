@@ -3,6 +3,7 @@ Welcome to Turtle_R GitHub repository! This is a space where five friends from E
 
 ## 🏆 Competitions
 - ### Data Crator Camp
+22.10.03~22.10.29
 
 We participated in the preliminary round of this competition, where we designed a classifier that could effectively categorize illustration images using Python.
 
