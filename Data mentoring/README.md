@@ -1,4 +1,4 @@
-# Data Mentoring Project
+# 🚸 Data Mentoring Project
 ## Project Overview
 During the period of July 21 to August 31, 2022, I participated in a data mentoring program hosted by the National Information Society Agency (NIA). 
 Our team, consisting of mentors and fellow students in the same major, conducted a data analysis project on measures to prevent children's traffic accidents and wrote a data story.
