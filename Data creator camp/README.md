@@ -1,5 +1,5 @@
 # 🖼️ Data creator camp
-`python` 
+🐍`python` 
 ## Image Classification Model for Illustration Images
 22.10.03~22.10.29	
 
