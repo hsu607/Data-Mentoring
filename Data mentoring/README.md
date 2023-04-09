@@ -1,5 +1,6 @@
 # 🚸 Data Mentoring Project
 22.07.21~22.08.31
+
 🐍 `python`
 ## Project Overview
 During the period of July 21 to August 31, 2022, I participated in a data mentoring program hosted by the National Information Society Agency (NIA). 
