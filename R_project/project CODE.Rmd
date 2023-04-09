@@ -1,0 +1,205 @@
+---
+title: "project CODE"
+author: "거북R"
+output: word_document
+---
+
+#시작(0:proj0, 1,2:proj1)
+```{r}
+start = function(n){
+  if(n==0){
+    proj0 <<- read.table("c:/temp/project.txt",header=T,sep="\t")
+    print("저장된 값을 불러옵니다.")
+    month <<- proj0$month
+    date0 <<- proj0$date
+    day <<- proj0$day
+    income.expense <<- proj0$income.expense
+    cost <<- proj0$cost
+    costPlus <<- (-1)*proj0$cost
+    proj0 <<- cbind(proj0,costPlus)
+    costPlus <<- proj0$costPlus
+    options(scipen=999)
+  }
+  else if(n==1){
+    proj1 <<- data.frame(month = numeric(0), date = numeric(0), day = character(), income.expense = character(), cost = numeric(0))  
+    print("newData 함수를 사용하여 값을 입력하세요.")
+    print("<example> newData(월,일,요일,수입/지출분야,금액)\n")
+    print("단, 매주 일요일은 필수로 입력하되 2번 이상의 입력은 불가합니다.")
+    print("수입이면 금액을 +값으로, 지출이면 금액을 -값으로 입력하세요.")
+    print("수입 및 지출이 없는 날은 newData(월,일,요일,NA,0)를 입력하세요.\n")
+    print("데이터를 다 작성한 후 start(2)를 입력하세요.")
+  }
+  else if(n==2){  
+    print("사용자 입력 버전 프로그램을 실행합니다.") 
+    proj2 = proj1
+    month <<- proj2$month  
+    date0 <<- proj2$date
+    day <<- proj2$day
+    income.expense <<- proj2$income.expense
+    cost <<- proj2$cost
+    costPlus <<- (-1)*proj2$cost 
+    proj2 <<- cbind(proj1,costPlus)  
+    costPlus <<- proj2$costPlus
+    options(scipen=999)  
+  }  
+}
+```
+
+#데이터 입력(proj1)
+```{r}
+newData = function(month, date, day, income.expense, cost){ 
+  newrow = data.frame(month, date, day, income.expense, cost) 
+  proj1 <<- rbind(proj1,newrow)  
+  return(proj1) 
+}
+```
+
+#주별 지출 내역
+```{r}
+weekPaylist = function(week){
+  weekNum = which(day=="sun")
+  
+  if(day[1]!="sun"){
+    if(week==1){
+      weekDate = 1:(weekNum[1]-1) 
+   }
+   else if(week<=length(weekNum)){
+      weekDate = weekNum[week-1]:(weekNum[week]-1) 
+   }
+   else{
+      weekDate = weekNum[week-1]:length(date0)
+   }
+  }
+  else{
+    if(week<length(weekNum)){
+      weekDate = weekNum[week]:(weekNum[week+1]-1)
+    }
+    else{
+      weekDate = weekNum[week]:length(date0)
+    }
+  }
+  
+  payList = sort(tapply(costPlus[date0=weekDate][costPlus[date0=weekDate]>0],              	income.expense[date0=weekDate][costPlus[date0=weekDate]>0],sum))
+  label = paste(names(payList), "\n", payList, "원")
+  return(pie(payList, labels=label, radius=1, col=2:10, main=paste(week,"주차의 소비내역")))
+}
+```
+
+#주별 예산 설정 및 예산 초과 지출 시 알림
+```{r}
+weekBudget = function(week,budget){ 
+  weekNum = which(day=="sun")
+  sumWeek = rep(0,length(weekNum)+1)
+  
+  if(day[1]!="sun"){
+	  if(week==1){
+        weekStart = costPlus[1:(weekNum[1]-1)]
+       sumWeek = sum(weekStart[which(weekStart>0)])
+  	}
+  	else if(week<=length(weekNum)){
+        weekCost = costPlus[weekNum[week-1]:(weekNum[week]-1)]
+        sumWeek = sum(weekCost[which(weekCost>0)])
+  	}
+	  else{
+        weekEnd = costPlus[weekNum[week-1]:length(date0)]
+        sumWeek = sum(weekEnd[which(weekEnd>0)])
+	  }
+  }
+  else{
+    if(week<length(weekNum)){
+      weekCost = costPlus[weekNum[week]:(weekNum[week+1]-1)]
+      sumWeek = sum(weekCost[which(weekCost>0)])
+    }
+  else{
+      weekEnd = costPlus[weekNum[week]:length(date0)]
+      sumWeek = sum(weekEnd[which(weekEnd>0)])
+    }
+  }
+  
+	if(sumWeek>budget){
+  	print(paste0(week,"번째 주는 예산보다 ",sumWeek-budget,"원 많이 지출하셨습니다."))
+	}
+  else if(sumWeek<budget){
+    print(paste0(week,"번째 주는 예산보다 ",budget-sumWeek,"원 적게 지출하셨습니다."))
+  }
+  else{
+    print(paste0(week,"번째 주는 목표한 예산만큼 지출하셨습니다."))
+  }
+}
+```
+
+#월별 자산 합계
+```{r}
+monTotal = function(mon){  
+  return(paste0(mon,"월 자산의 합계는 ",sum(cost[which(month==mon)]),"원 입니다.")) 
+}
+```
+
+#월별 수입
+```{r}
+monIncome = function(mon){  
+  return(paste0(mon,"월 수입은 ",sum(cost[cost>0 & month==mon]),"원입니다."))  
+} 
+```
+
+#월별 지출
+```{r}
+monExpense = function(mon){ 
+  return(paste0(mon,"월 지출은 ",sum(cost[cost<0 & month==mon]),"원입니다.")) 
+}
+```
+
+#월별 수입 내역
+```{r}
+monIncomelist = function(mon){  
+  incomeList = sort(tapply(cost[cost>0 & month==mon], income.expense[cost>0 & month==mon],sum))  
+  label = paste(names(incomeList), "\n", incomeList, "원") 
+  return(pie(incomeList, labels=label, radius=1, col=2:5, main=paste(mon,"월 수입내역")))
+}  
+```
+
+#월별 지출 내역
+```{r}
+monPaylist = function(mon){  
+  payList = sort(tapply(costPlus[costPlus>0 & month==mon],income.expense[costPlus>0 & month==mon],sum))  
+  label <- paste(names(payList), "\n", payList,"원")  
+  return(pie(payList, labels=label, radius=1, col=10:2,main=paste(mon,"월 소비내역")))
+}  
+```
+
+#월별 예산 알림
+```{r}
+monBudget = function(mon,budget){
+  sumMonth = sum(costPlus[costPlus>0 & month==mon]) 
+  if(sumMonth > budget){
+    print(paste0(mon,"월달은 예산보다 ",sumMonth-budget,"원 많이 지출하셨습니다."))
+  }  
+  else if(sumMonth< budget){
+    print(paste0(mon,"월달은 예산보다 ",budget-sumMonth,"원 적게 지출하셨습니다."))
+  }  
+  else{
+    print(paste0(mon,"월달은 목표한 예산만큼 지출하셨습니다."))
+  } 
+}
+```
+
+#한달 총자산 추이 그래프
+```{r}
+monPlot = function(mon){  
+  plot(cumsum(cost[month==mon])%/%10000,pch=16,
+  col=2,cex=1,type="l",axes=FALSE,xlab=paste0(mon,"월 총자산 추이 그래프"),ylab="단위 : 만 원",ylim=c(0,100))  
+  axis(2)
+  axis(4) 
+}
+```
+
+#지난 달과의 총자산 추이 비교 그래프
+```{r}
+monCompare = function(mon){  
+   plot(cumsum(cost[month==mon])%/%10000,pch=16,
+       col=2,cex=1,type="l",axes=FALSE,xlab=paste0(mon,"월 : 빨간색, ",(mon-1),"월 : 초록색"),ylab="단위 : 만 원",ylim=c(0,100))       
+points(cumsum(cost[month==(mon-1)])%/%10000,pch=16,col=3,cex=1,type="l")  
+  axis(2)
+  axis(4)  
+}
+```
