@@ -10,9 +10,7 @@ Our team, consisting of mentors and fellow students in the same major, conducted
 We received an encouragement award in the Data Mentoring program.
 
 ## 🔗 Project Deliverables
-Our project's data story was uploaded to the Integrated Data Map site, and you can find it at this link: 
-
-https://www.bigdata-map.kr/datastory/new/story_45.
+Our project's data story was uploaded to the Integrated Data Map site, and you can find it at this link: [click](https://www.bigdata-map.kr/datastory/new/story_45)
 
 
 
