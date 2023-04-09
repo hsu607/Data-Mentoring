@@ -1,5 +1,5 @@
 # 🐢Turtle_R
-<img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white"><img src="https://img.shields.io/badge/R-276DC3?style=plastic&logo=R&logoColor=white">
 
 
 Welcome to Turtle_R GitHub repository! This is a space where five friends from Ewha Womans University's Department of Statistics share our projects and competition experiences.
