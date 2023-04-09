@@ -2,7 +2,7 @@
 Welcome to Turtle_R GitHub repository! This is a space where five friends from Ewha Womans University's Department of Statistics share our projects and competition experiences.
 
 ## 🏆 Competitions
-- Data Crator Camp
+- ## Data Crator Camp
 
 We participated in the preliminary round of this competition, where we designed a classifier that could effectively categorize illustration images using Python.
 
