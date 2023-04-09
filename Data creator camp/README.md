@@ -1,4 +1,4 @@
-# Data creator camp
+# 🖼️ Data creator camp
 ## Image Classification Model for Illustration Images
 22.10.03~22.10.29	
 
